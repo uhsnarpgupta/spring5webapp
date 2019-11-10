@@ -1,10 +1,9 @@
 package guru.springframework.spring5webapp.bootstrap;
 
-import guru.springframework.spring5webapp.model.Author;
-import guru.springframework.spring5webapp.model.Book;
-import guru.springframework.spring5webapp.model.Publisher;
+import guru.springframework.spring5webapp.model.*;
 import guru.springframework.spring5webapp.repositories.AuthorRepository;
 import guru.springframework.spring5webapp.repositories.BookRepository;
+import guru.springframework.spring5webapp.repositories.ItemRepository;
 import guru.springframework.spring5webapp.repositories.PublisherRepository;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
@@ -19,11 +18,13 @@ public class DevBootstrap implements ApplicationListener<ContextRefreshedEvent> 
     private AuthorRepository authorRepository;
     private BookRepository bookRepository;
     private PublisherRepository publisherRepository;
+    private ItemRepository itemRepository;
 
-    public DevBootstrap(AuthorRepository authorRepository, BookRepository bookRepository, PublisherRepository publisherRepository) {
+    public DevBootstrap(AuthorRepository authorRepository, BookRepository bookRepository, PublisherRepository publisherRepository, ItemRepository itemRepository) {
         this.authorRepository = authorRepository;
         this.bookRepository = bookRepository;
         this.publisherRepository = publisherRepository;
+        this.itemRepository = itemRepository;
     }
 
     @Override
@@ -56,5 +57,23 @@ public class DevBootstrap implements ApplicationListener<ContextRefreshedEvent> 
 
         authorRepository.save(rod);
         bookRepository.save(noEJB);
+
+        ItemDetail itemDetail = new ItemDetail();
+        itemDetail.setNumber(5);
+        itemDetail.setDetail("Gorgeous");
+        Item item = new Item();
+        item.setItemDetail(itemDetail);
+        item.setName("Item1");
+        item.setSwiftCode("zoRo12");
+        itemRepository.save(item);
+
+        ItemDetail itemDetail2 = new ItemDetail();
+        itemDetail2.setNumber(15);
+        itemDetail2.setDetail("Amazing");
+        Item item2 = new Item();
+        item2.setItemDetail(itemDetail2);
+        item2.setName("Item2");
+        item2.setSwiftCode("hoolala110");
+        itemRepository.save(item2);
     }
 }
